@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart'; // Импортируем файл с темой
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    TasksScreen(), // Задачи
-    TodayScreen(), // Сегодня
-    CompletedScreen(), // Выполнено
-    ProfileScreen(), // Профиль
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text('Задачи'),
+    Text('Сегодня'),
+    Text('Выполнено'),
+    Text('Профиль'),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +31,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Прозрачный AppBar
         elevation: 0, // Убираем тень
-//        title: Text( 
-//          _screens[_selectedIndex].runtimeType.toString(), // Заголовок по экрану
-//          style: TextStyle(color: Colors.black), // Черный текст
       ),
-//    ),
       body: Container( // Добавляем Container для фона
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -40,20 +44,12 @@ class _MainPageState extends State<MainPage> {
             stops: const [0.1, 0.9], // Основной цвет занимает 90% пространства
           ),
         ),
-        child: _screens[_selectedIndex], // Оборачиваем body в Container
+        child: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent, // Прозрачный BottomNavigationBar
-        elevation: 0, // Убираем тень
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        selectedItemColor: DoDidDoneTheme.lightTheme.colorScheme.primary, // Основной цвет для выбранной иконки
-        unselectedItemColor: Colors.grey, // Серый цвет для невыбранных иконок
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Задачи',
@@ -71,36 +67,9 @@ class _MainPageState extends State<MainPage> {
             label: 'Профиль',
           ),
         ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
-  }
-}
-
-// Заглушки для экранов
-class TasksScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Задачи'));
-  }
-}
-
-class TodayScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Сегодня'));
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Профиль'));
-  }
-}
-
-class CompletedScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Выполнено'));
   }
 }
