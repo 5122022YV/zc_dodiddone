@@ -12,6 +12,9 @@ class DoDidDoneTheme {
     // Добавляем стиль для кнопок
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          const Color(0xFF4ceb8b), // Цвет фона кнопки
+        ),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         textStyle: MaterialStateProperty.all<TextStyle>(
           const TextStyle(color: Colors.white), // Белый текст
