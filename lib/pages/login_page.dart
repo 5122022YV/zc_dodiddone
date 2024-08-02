@@ -37,6 +37,57 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Добавление логотипа университета
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/zerocoder.png', // Замените на правильный путь к файлу
+                    height: 60, // Устанавливаем высоту изображения
+                  ),
+                  const SizedBox(width: 8),
+                  // Добавляем текст "zerocoder"
+                  Text(
+                    'zerocoder',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Белый цвет текста
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              // Вставка надписи DoDidDone
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Do',
+                      style: TextStyle(
+                        color: DoDidDoneTheme.lightTheme.colorScheme.primary,
+                      ),
+                    ),
+                    const TextSpan(
+                      text: 'Did',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    TextSpan(
+                      text: 'Done',
+                      style: TextStyle(
+                        color: DoDidDoneTheme.lightTheme.colorScheme.secondary,
+                      ),
+                    ),
+                    ],
+                ),
+              ),
+              const SizedBox(height: 30),
+
               // Заголовок
               Text(
                 isLogin ? 'Вход' : 'Регистрация', // Заголовок "Вход" или "Регистрация"
