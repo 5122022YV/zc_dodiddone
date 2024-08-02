@@ -14,7 +14,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-   TasksPage(),
+    TasksPage(),
     Text('Сегодня'),
     Text('Выполнено'),
     ProfilePage(), // Заменяем Text на ProfilePage
@@ -24,6 +24,80 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  // Функция для показа диалогового окна
+  void _showAddTaskDialog() {
+    // Переменная для хранения выбранной даты и времени
+    DateTime? _selectedDateTime;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Добавить задачу'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(hintText: 'Введите название задачи'),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                decoration: InputDecoration(hintText: 'Описание задачи'),
+              ),
+              SizedBox(height: 16),
+              // Кнопка для выбора даты и времени
+              ElevatedButton(
+                onPressed: () {
+                  // Открываем виджет выбора даты и времени
+                  showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                  ).then((pickedDate) {
+                    if (pickedDate == null) return;
+                    // Открываем виджет выбора времени
+                    showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    ).then((pickedTime) {
+                      if (pickedTime == null) return;
+                      // Сохраняем выбранную дату и время
+                      _selectedDateTime = DateTime(
+                        pickedDate.year,
+                        pickedDate.month,
+                        pickedDate.day,
+                        pickedTime.hour,
+                        pickedTime.minute,
+                      );
+                    });
+                  });
+                },
+                child: Text('Выбрать дедлайн'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Закрываем диалоговое окно
+              },
+              child: Text('Отмена'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Здесь вы можете добавить логику для сохранения задачи
+                // Используйте _selectedDateTime для получения выбранной даты и времени
+                Navigator.of(context).pop(); // Закрываем диалоговое окно
+              },
+              child: Text('Добавить'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -71,6 +145,10 @@ class _MainPageState extends State<MainPage> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddTaskDialog, // Вызываем функцию при нажатии
+        child: Icon(Icons.add),
       ),
     );
   }
