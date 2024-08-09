@@ -4,6 +4,7 @@ import '../theme/theme.dart'; // Импортируем файл с темой
 import '../screens/all_tasks.dart'; // Импортируем файл с страницами задач
 
 class MainPage extends StatefulWidget {
+  // ignore: use_super_parameters
   const MainPage({Key? key}) : super(key: key);
 
   @override
@@ -26,7 +27,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  // Функция для показа диалогового окна
+  // Функция для показа диалогового окна 'Добавить задачу'
   void _showAddTaskDialog() {
     // Переменная для хранения выбранной даты и времени
     DateTime? _selectedDateTime;
