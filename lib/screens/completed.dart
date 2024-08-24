@@ -3,24 +3,21 @@ import 'package:flutter/material.dart';
 
 import '../widgets/task_item.dart';
 
-class TasksPage extends StatefulWidget {
-  const TasksPage({Key? key}) : super(key: key);
+class CompletedPage extends StatefulWidget {
+  const CompletedPage({Key? key}) : super(key: key);
 
   @override
-  State<TasksPage> createState() => _TasksPageState();
+  State<CompletedPage> createState() => _CompletedPageState();
 }
 
-class _TasksPageState extends State<TasksPage> {
+class _CompletedPageState extends State<CompletedPage> {
   final CollectionReference _tasksCollection =
       FirebaseFirestore.instance.collection('tasks');
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _tasksCollection
-          .where('completed', isEqualTo: false)
-          .where('is_for_today', isEqualTo: false)
-          .snapshots(),
+      stream: _tasksCollection.where('completed', isEqualTo: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text('Ошибка при загрузке задач'));
@@ -41,7 +38,7 @@ class _TasksPageState extends State<TasksPage> {
         return ListView.builder(
           itemCount: tasks.length,
           itemBuilder: (context, index) {
-            final taskData = tasks[index].data() as Map<String, dynamic>;          
+            final taskData = tasks[index].data() as Map<String, dynamic>;
             final taskTitle = taskData['title'];
             final taskDescription = taskData['description'];
             final taskDeadline = (taskData['deadline'] as Timestamp).toDate();
@@ -53,12 +50,12 @@ class _TasksPageState extends State<TasksPage> {
               toLeft: () {
                 _tasksCollection
                     .doc(tasks[index].id)
-                    .update({'completed': true});
+                    .update({'is_for_today': true, 'completed': false});
               },
               toRight: () {
                 _tasksCollection
                     .doc(tasks[index].id)
-                    .update({'is_for_today': true});
+                    .update({'is_for_today': false, 'completed': false});
               },
               // Добавьте обработчики для изменения и удаления задач
               onEdit: () {
