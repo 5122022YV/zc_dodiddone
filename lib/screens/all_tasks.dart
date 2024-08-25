@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:zc_dodiddone/widgets/dialog_widget.dart';
 
 import '../widgets/task_item.dart';
 
@@ -60,10 +61,20 @@ class _TasksPageState extends State<TasksPage> {
                     .doc(tasks[index].id)
                     .update({'is_for_today': true});
               },
-              // Добавьте обработчики для изменения и удаления задач
+              //  Обработчики для изменения и удаления задач
               onEdit: () {
                 // Обработка изменения задачи
-                // Например, можно открыть диалог для редактирования
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return DialogWidget(
+                      taskId: tasks[index].id,
+                      title: taskTitle,
+                      description: taskDescription,
+                      deadline: taskDeadline,  
+                    ); 
+                  },
+                );
               },
               onDelete: () {
                 // Обработка удаления задачи
