@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../services/firebase_auth.dart'; // Импортируем AuthenticationService
 import '../pages/login_page.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseAuthService _authService = FirebaseAuthService(); // Создаем экземпляр AuthenticationService
 
   @override
@@ -84,12 +84,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
 // import 'package:flutter/material.dart';
 // import '../pages/login_page.dart';
-// class ProfilePage extends StatefulWidget {
-//   const ProfilePage({Key? key}) : super(key: key);
+// class ProfileScreen extends StatefulWidget {
+//   const ProfileScreen({Key? key}) : super(key: key);
 //   @override
-//   State<ProfilePage> createState() => _ProfilePageState();
+//   State<ProfileScreen> createState() => _ProfileScreenState();
 // }
-// class _ProfilePageState extends State<ProfilePage> {
+// class _ProfileScreenState extends State<ProfileScreen> {
 //   bool isEmailVerified = false; // Флаг для проверки подтверждения почты
 //   @override
 //   Widget build(BuildContext context) {
