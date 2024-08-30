@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zc_dodiddone/screens/profile.dart';
 import '../theme/theme.dart';
-import 'main_page.dart';
-import '../services/firebase_auth.dart'; // Импортируем AuthenticationService
+//import 'main_page.dart';
+//import '../services/firebase_auth.dart'; // Импортируем AuthenticationService
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
@@ -64,5 +66,7 @@ class FirebaseAuthService {
 
   // Метод для получения текущего пользователя
   User? get currentUser => _firebaseAuth.currentUser;
+
+  uploadAvatar(File file) {}
 }
 
