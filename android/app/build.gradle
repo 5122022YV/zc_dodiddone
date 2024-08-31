@@ -1,13 +1,20 @@
+buildscript {
+    ext.kotlin_version = '2.0.20' // Replace with the latest version
+    // ... rest of your buildscript block
+}
+
 plugins {
     id 'com.android.application'
     // START: FlutterFire Configuration
     //id "com.google.gms.google-services"
     id 'com.google.gms.google-services' version '4.4.2' apply false
     // END: FlutterFire Configuration
-    id 'kotlin-android'
+    //id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android' version '2.0.20' // Update this version
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
+
 
 dependencies {
   // Import the Firebase BoM
@@ -63,13 +70,42 @@ android {
         minSdkVersion 23
     }
 
-    buildTypes {
+    // buildTypes {
+    //     release {
+    //         // TODO: Add your own signing config for the release build.
+    //         // Signing with the debug keys for now, so `flutter run --release` works.
+    //         signingConfig = signingConfigs.debug
+    //     }
+    // } 
+    signingConfigs {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            // Load keystore information from environment variables
+            if (System.getenv("KEYSTORE_PASSWORD") != null && 
+                System.getenv("KEY_PASSWORD") != null &&
+                System.getenv("KEY_ALIAS") != null &&
+                System.getenv("KEYSTORE_PATH") != null) {
+
+                storeFile file(System.getenv("KEYSTORE_PATH"))
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            } else {
+                throw new GradleException("Keystore environment variables not set. Check your environment configuration.")
+            }
         }
     }
+
+    buildTypes {
+        release {
+            // Signing config for when you release your application
+            //... signing configurations ...
+            minifyEnabled true // Enables code shrinking 
+            shrinkResources true // Enables resource shrinking
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release // Apply the signing config
+        }
+    }
+
 }
 
 flutter {
